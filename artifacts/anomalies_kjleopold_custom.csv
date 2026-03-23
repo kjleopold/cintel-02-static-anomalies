@@ -1,0 +1,7 @@
+age_years,height_inches,anomaly_reason
+0,20,Height too low
+3,70,Unrealistic age/height combo
+8,5,Height too low
+12,95,Height too high
+10,72,Height too high
+120,66,Age too high
