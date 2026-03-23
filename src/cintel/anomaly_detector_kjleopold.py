@@ -122,6 +122,14 @@ def main() -> None:
     LOG.info(f"MAX_REASONABLE_X_VALUE: {MAX_REASONABLE_X_VALUE} in years")
     LOG.info(f"MAX_REASONABLE_Y_VALUE: {MAX_REASONABLE_Y_VALUE} in inches")
 
+    # NEW: Define an "impossible combination" rule
+    # Example: very young children shouldn't be extremely tall
+    YOUNG_AGE_THRESHOLD: Final[float] = 5.0
+    EXTREME_HEIGHT_FOR_YOUNG: Final[float] = 52.0
+
+    LOG.info(f"YOUNG_AGE_THRESHOLD: {YOUNG_AGE_THRESHOLD} years")
+    LOG.info(f"EXTREME_HEIGHT_FOR_YOUNG: {EXTREME_HEIGHT_FOR_YOUNG} inches")
+
     # Create a new DataFrame named anomalies_df that contains
     # only the rows where EITHER
     # the age is TOO HIGH OR
