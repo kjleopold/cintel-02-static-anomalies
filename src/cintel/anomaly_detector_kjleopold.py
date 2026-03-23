@@ -1,7 +1,7 @@
 """
 anomaly_detector_case.py - Project script (example).
 
-Author: Denise Case, Kellie J. Leopold
+Author: Denise Case
 Date: 2026-03-07
 
 Static Data
@@ -21,12 +21,12 @@ Purpose
 
 Paths (relative to repo root)
 
-    INPUT FILE: data/clinic_data_kjleopold.csv
-    OUTPUT FILE: artifacts/anomalies_kjleopold.csv
+    INPUT FILE: data/clinic_data_case.csv
+    OUTPUT FILE: artifacts/anomalies_case.csv
 
 Terminal command to run this file from the root project folder
 
-    uv run python -m cintel.anomaly_detector_kjleopold
+    uv run python -m cintel.anomaly_detector_case
 
 OBS:
   Don't edit this file - it should remain a working example.
@@ -122,8 +122,7 @@ def main() -> None:
     LOG.info(f"MAX_REASONABLE_X_VALUE: {MAX_REASONABLE_X_VALUE} in years")
     LOG.info(f"MAX_REASONABLE_Y_VALUE: {MAX_REASONABLE_Y_VALUE} in inches")
 
-    # NEW: Define an "impossible combination" rule
-    # Example: very young children shouldn't be extremely tall
+    # New: impossible combination rule
     YOUNG_AGE_THRESHOLD: Final[float] = 5.0
     EXTREME_HEIGHT_FOR_YOUNG: Final[float] = 52.0
 
@@ -136,9 +135,14 @@ def main() -> None:
     # the height is TOO HIGH.
     # A single pipe (|) is the OR operator in polars.
     # We will use greater than or equal to (>=) to find values at or above the threshold.
+    # Apply ALL anomaly rules
     anomalies_df: pl.DataFrame = df.filter(
         (pl.col("age_years") >= MAX_REASONABLE_X_VALUE)
         | (pl.col("height_inches") >= MAX_REASONABLE_Y_VALUE)
+        | (
+            (pl.col("age_years") < YOUNG_AGE_THRESHOLD)
+            & (pl.col("height_inches") > EXTREME_HEIGHT_FOR_YOUNG)
+        )
     )
 
     LOG.info(f"Count of anomalies found: {anomalies_df.height}")
